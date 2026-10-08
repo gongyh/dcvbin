@@ -25,8 +25,9 @@ from .bert_padding import (index_first_axis,
                                             unpad_input, unpad_input_only)
 
 try:
-    if torch.cuda.is_available():
-        from .flash_attn_triton import flash_attn_qkvpacked_func
+    from .flash_attn_triton import flash_attn_qkvpacked_func
+    if torch.cuda.is_available() == False: # gpu device must be available
+        flash_attn_qkvpacked_func = None
 except ImportError as e:
     flash_attn_qkvpacked_func = None
 
